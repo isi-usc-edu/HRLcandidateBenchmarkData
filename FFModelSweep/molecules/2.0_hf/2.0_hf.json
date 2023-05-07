@@ -1,0 +1,19 @@
+{
+    "CASs": [
+        [
+            null,
+            null
+        ]
+    ],
+    "bases": [
+        "cc-pvdz"
+    ],
+    "charge": 0,
+    "geometry": [
+        "F 0.0 0.0 0.0",
+        "H 0.0 0.0 1.870002"
+    ],
+    "multiplicity": 1,
+    "name": "2.0_hf",
+    "symmetry": false
+}

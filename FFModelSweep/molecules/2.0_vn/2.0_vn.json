@@ -1,0 +1,19 @@
+{
+    "CASs": [
+        [
+            null,
+            null
+        ]
+    ],
+    "bases": [
+        "def2-svp"
+    ],
+    "charge": 0,
+    "geometry": [
+        "V 0.0 0.0 0.0",
+        "N 0.0 0.0 3.0666"
+    ],
+    "multiplicity": 3,
+    "name": "2.0_vn",
+    "symmetry": false
+}

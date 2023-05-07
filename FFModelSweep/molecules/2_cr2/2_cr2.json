@@ -1,0 +1,19 @@
+{
+    "CASs": [
+        [
+            null,
+            null
+        ]
+    ],
+    "bases": [
+        "cc-pwCVQZ-DK"
+    ],
+    "charge": 0,
+    "geometry": [
+        "Cr 0.0 0.0 0.0",
+        "Cr 0.0 0.0 2.0"
+    ],
+    "multiplicity": 1,
+    "name": "2_cr2",
+    "symmetry": false
+}

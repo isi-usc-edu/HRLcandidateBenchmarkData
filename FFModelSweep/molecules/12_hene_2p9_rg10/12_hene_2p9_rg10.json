@@ -1,0 +1,19 @@
+{
+    "CASs": [
+        [
+            null,
+            null
+        ]
+    ],
+    "bases": [
+        "def2-QZVPPD"
+    ],
+    "charge": 0,
+    "geometry": [
+        "He 0.0000000000 0.0000000000 0.0000000000",
+        "Ne 0.0000000000 0.0000000000 2.9000000000"
+    ],
+    "multiplicity": 1,
+    "name": "12_hene_2p9_rg10",
+    "symmetry": false
+}

@@ -1,0 +1,19 @@
+{
+    "CASs": [
+        [
+            null,
+            null
+        ]
+    ],
+    "bases": [
+        "sto-6g"
+    ],
+    "charge": 0,
+    "geometry": [
+        "Li 0.0 -0.0 -0.22325",
+        "H -0.0 0.0 2.02477"
+    ],
+    "multiplicity": 1,
+    "name": "1.5_lih",
+    "symmetry": false
+}

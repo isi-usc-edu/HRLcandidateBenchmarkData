@@ -1,0 +1,16 @@
+{
+    "avg_edge_order": 1,
+    "avg_edge_weight": 39.113701587066274,
+    "avg_vertex_degree": 7.0,
+    "clustering_coefficient": 0.40579755745685286,
+    "edge_order_std_dev": 1.2649110640673518,
+    "edge_weight_std_dev": 57.76158326831738,
+    "induced_norm": 1799.2302730050483,
+    "max_edge_order": 5,
+    "max_edge_weight": 400.1784023408162,
+    "max_vertex_degree": 9,
+    "min_edge_order": 3.0,
+    "min_edge_weight": 0.72021689991964,
+    "n_qubits": 5,
+    "total_pstrings": 46
+}

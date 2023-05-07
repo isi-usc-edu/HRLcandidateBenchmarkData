@@ -1,0 +1,20 @@
+{
+    "CASs": [
+        [
+            null,
+            null
+        ]
+    ],
+    "bases": [
+        "sto-6g"
+    ],
+    "charge": 0,
+    "geometry": [
+        "O 0.14566 -0.0 0.0",
+        "H 1.44414 -0.0 1.49898",
+        "H 1.44414 0.0 -1.49898"
+    ],
+    "multiplicity": 1,
+    "name": "2.0_h2o",
+    "symmetry": false
+}

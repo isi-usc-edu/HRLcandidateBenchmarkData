@@ -1,0 +1,21 @@
+{
+    "CASs": [
+        [
+            null,
+            null
+        ]
+    ],
+    "bases": [
+        "sto-6g"
+    ],
+    "charge": 0,
+    "geometry": [
+        "N 0.0 0.60029 -2e-05",
+        "H -0.0 -0.39803 1.7292",
+        "H 0.0 -0.39789 -1.72921",
+        "H 0.0 2.59701 1e-05"
+    ],
+    "multiplicity": 1,
+    "name": "2.0_nh3",
+    "symmetry": false
+}

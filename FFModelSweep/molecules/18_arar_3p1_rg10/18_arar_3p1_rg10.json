@@ -1,0 +1,19 @@
+{
+    "CASs": [
+        [
+            null,
+            null
+        ]
+    ],
+    "bases": [
+        "def2-QZVPPD"
+    ],
+    "charge": 0,
+    "geometry": [
+        "Ar 0.0000000000 0.0000000000 0.0000000000",
+        "Ar 0.0000000000 0.0000000000 3.1000000000"
+    ],
+    "multiplicity": 1,
+    "name": "18_arar_3p1_rg10",
+    "symmetry": false
+}

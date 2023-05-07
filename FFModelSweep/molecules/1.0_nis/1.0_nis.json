@@ -1,0 +1,19 @@
+{
+    "CASs": [
+        [
+            null,
+            null
+        ]
+    ],
+    "bases": [
+        "def2-svp"
+    ],
+    "charge": 0,
+    "geometry": [
+        "Ni 0.0 0.0 0.0",
+        "S 0.0 0.0 1.96486"
+    ],
+    "multiplicity": 3,
+    "name": "1.0_nis",
+    "symmetry": false
+}

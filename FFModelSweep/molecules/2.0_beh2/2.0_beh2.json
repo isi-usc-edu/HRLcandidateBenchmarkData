@@ -1,0 +1,20 @@
+{
+    "CASs": [
+        [
+            null,
+            null
+        ]
+    ],
+    "bases": [
+        "sto-6g"
+    ],
+    "charge": 0,
+    "geometry": [
+        "Be 0.0 0.0 -0.0",
+        "H -0.0 0.0 2.54914",
+        "H 0.0 -0.0 -2.54914"
+    ],
+    "multiplicity": 1,
+    "name": "2.0_beh2",
+    "symmetry": false
+}
