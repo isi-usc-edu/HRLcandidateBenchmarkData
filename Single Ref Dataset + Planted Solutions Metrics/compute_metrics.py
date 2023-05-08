@@ -25,9 +25,9 @@ def compute_metrics(H_jw, sample_id):
     metrics["induced_norm"] = H_jw.induced_norm(order=1)
 
     # Compute graph based metrics
-    total_pstrings, n_qubits, vertex_deg_stats, edge_weight_stats, edge_order_stats, clustering_coeff = compute_graph_metrics(pstring_dict)
+    n_qubits, vertex_deg_stats, edge_weight_stats, edge_order_stats = compute_graph_metrics(pstring_dict)
 
-    metrics['total_pstrings'] = total_pstrings
+    metrics['total_pstrings'] = len(list(pstring_dict.keys()))
 
     metrics['max_vertex_degree'] = vertex_deg_stats[0]
     metrics['avg_vertex_degree'] = vertex_deg_stats[1]
@@ -43,8 +43,6 @@ def compute_metrics(H_jw, sample_id):
     metrics['edge_order_std_dev'] = edge_order_stats[3]
 
     metrics['n_qubits'] = n_qubits
-
-    metrics["clustering_coefficient"] = clustering_coeff
 
     path = "free_fermion_stats/"  # "free_fermion_stats/"
     with open(path + str(sample_id) + "_metrics.json", "w") as write_file:
@@ -342,7 +340,6 @@ def compute_graph_metrics(pstring_dict):
     pstrings = convert_pauli_hamiltonian(pstring_dict)[0][:]
     hypergraph = build_hypergraph(pstrings)
 
-    total_strings = len(pstrings)
     edge_weight_stats = hyperedge_weight_stats(pstring_dict)
     edge_orders_stats = hyperedge_orders_stats(hypergraph)
     vertex_deg_stats = vertex_degree_stats(hypergraph)
@@ -351,12 +348,12 @@ def compute_graph_metrics(pstring_dict):
     edge_weights = convert_pauli_hamiltonian(pstring_dict)[1][:]
 
 
-    H_weighted = build_weighted_hypernetx_graph(pstrings, edge_weights)
+    #H_weighted = build_weighted_hypernetx_graph(pstrings, edge_weights)
 
     # Compute hypergraph metrics with HyperNetX
     #c_degree, c_closeness, c_betweenness = centrality_graph_metrics(H_weighted)
 
-    clustering_coeff = weighted_hypergraph_clustering_coefficient(H_weighted)
+    #clustering_coeff = weighted_hypergraph_clustering_coefficient(H_weighted)
 
 
-    return total_strings, n_qubits, vertex_deg_stats, edge_weight_stats, edge_orders_stats, clustering_coeff
+    return n_qubits, vertex_deg_stats, edge_weight_stats, edge_orders_stats

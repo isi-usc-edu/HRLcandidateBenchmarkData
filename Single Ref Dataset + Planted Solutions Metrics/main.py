@@ -103,7 +103,7 @@ def generate_random_clifford_circuit(qubits, depth):
     return circuit
 
 
-def generate_samples(n, m, sample_id, num_gates, a=100., b=100.):
+def generate_samples(n, m, sample_id, num_gates, a=100, b=1000):
     num_qubits = n
     qubits = [cirq.GridQubit(i, 0) for i in range(num_qubits)]
 
@@ -141,31 +141,57 @@ def generate_dataframe():
     samples1 = glob.glob('free_fermion_stats/*_metrics.json')
     samples2 = glob.glob('random_H/*_metrics.json')
     samples3 = glob.glob('molecules/*/*_metrics.json')
-    samples = np.concatenate((np.concatenate((samples1, samples2)), samples3))
+    #samples = np.concatenate((np.concatenate((samples1, samples2)), samples3))
 
-    analysis = {}
+    analysis1 = {}
 
     index = 0
-    for sample in samples:
+    for sample in samples1:
         with open(sample) as user_file:
             f = user_file.read()
         metrics_dict = json.loads(f)
-        analysis[index] = metrics_dict
+        analysis1[index] = metrics_dict
         index += 1
     keys = metrics_dict.keys()
-    df = pd.DataFrame.from_dict(analysis).T
-    return df, keys
+    df1 = pd.DataFrame.from_dict(analysis1).T
+
+    analysis2 = {}
+
+    index = 0
+    for sample in samples2:
+        with open(sample) as user_file:
+            f = user_file.read()
+        metrics_dict = json.loads(f)
+        analysis2[index] = metrics_dict
+        index += 1
+
+    df2 = pd.DataFrame.from_dict(analysis2).T
+
+    analysis3 = {}
+
+    index = 0
+    for sample in samples3:
+        with open(sample) as user_file:
+            f = user_file.read()
+        metrics_dict = json.loads(f)
+        analysis3[index] = metrics_dict
+        index += 1
+
+    df3 = pd.DataFrame.from_dict(analysis3).T
+
+
+    return df1, df2, df3, keys
 
 
 def plot_metrics(df, axes):
-    df.plot(kind="scatter", x=axes[0], y=axes[1], ec='r', fc='none')
-    plt.savefig(axes[0] + '_vs_' + axes[1] +'.png')
+    ax = df.plot(kind="scatter", x=axes[0], y=axes[1], ec='r', fc='none', label='FF + Impurity')
+    return ax
 
 if __name__ == '__main__':
     print('Program started')
 
 
-    ns = [i for i in range(4, 10)]
+    ns = [i for i in range(10, 20)]
     ms = [i for i in range(2, 4)]
 
 
@@ -186,13 +212,20 @@ if __name__ == '__main__':
     
 
 
-    df, keys = generate_dataframe()
+    df1, df2, df3, keys = generate_dataframe()
 
     axes = list(keys)
 
-    print(len(df))
+
     for i in range(len(axes)):
-        plot_metrics(df, ["induced_norm", axes[i]])
+        #s = pd.Series(['c', 'y'], index=[1, 0])
+        if axes[i] != 'clustering_coefficient':
+            ax = plot_metrics(df1, ["induced_norm", axes[i]])
+            df2.plot(kind="scatter", x="induced_norm", y=axes[i], ec='g', fc='none', ax=ax, label="Random H")
+            df3.plot(kind="scatter", x="induced_norm", y=axes[i], ec='b', fc='none', ax=ax, label="Single Ref. Molecules")
+            plt.legend()
+
+            plt.savefig("induced_norm" + '_vs_' + axes[i] + '.png')
 
 
 

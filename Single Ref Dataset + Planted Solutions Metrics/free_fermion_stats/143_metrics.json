@@ -1,16 +1,15 @@
 {
     "avg_edge_order": 1,
-    "avg_edge_weight": 32.1339713730641,
-    "avg_vertex_degree": 12.0,
-    "clustering_coefficient": 0.3537946711040823,
-    "edge_order_std_dev": 1.7320508075688772,
-    "edge_weight_std_dev": 65.99703291942276,
-    "induced_norm": 2956.3253663218966,
-    "max_edge_order": 7,
-    "max_edge_weight": 636.3811246815226,
-    "max_vertex_degree": 16,
-    "min_edge_order": 4.0,
-    "min_edge_weight": 0.25858076337547686,
-    "n_qubits": 7,
-    "total_pstrings": 92
+    "avg_edge_weight": 34.91456542136133,
+    "avg_vertex_degree": 35.0,
+    "edge_order_std_dev": 3.0983866769659336,
+    "edge_weight_std_dev": 120.77818813529056,
+    "induced_norm": 11382.148327363786,
+    "max_edge_order": 13,
+    "max_edge_weight": 1722.1052052946195,
+    "max_vertex_degree": 49,
+    "min_edge_order": 7.0,
+    "min_edge_weight": 0.0727944128720921,
+    "n_qubits": 13,
+    "total_pstrings": 326
 }
