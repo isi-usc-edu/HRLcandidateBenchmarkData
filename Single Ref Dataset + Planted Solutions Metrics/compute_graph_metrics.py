@@ -58,7 +58,7 @@ def pauli_string_to_hyperedge(pauli_string):
         (ik_1, ik_2, ..., ik_m)
 
         where the associated Pauli string is P_i = σ_i1 x ... x σ_in
-        and indices k_j are those such that σ_ik_j != 1
+        and indices ik_j are those such that σ_ik_j != 1
 
         Args:
             str: Pauli string "XIXZIIY"
@@ -100,9 +100,13 @@ def vertex_degree_stats(hypergraph):
     tuple: A tuple containing the max and average of the number of hyperedges each vertex
            is a member of.
     """
-    num_hyperedges = [len(hyperedges) for hyperedges in hypergraph.values()]
-    max_hyperedges = max(num_hyperedges)
-    avg_hyperedges = sum(num_hyperedges) / len(num_hyperedges)
+    num_hyperedges_per_vertex = []
+
+    for vertex in range(len(hypergraph)):
+        num_hyperedges_per_vertex.append(len(hypergraph[vertex]))
+
+    max_hyperedges = max(num_hyperedges_per_vertex)
+    avg_hyperedges = sum(num_hyperedges_per_vertex) / len(num_hyperedges_per_vertex)
 
     return max_hyperedges, avg_hyperedges
 
@@ -119,7 +123,12 @@ def hyperedge_orders_stats(hypergraph):
     tuple: A tuple containing the max, average, minimum, and standard deviation of the
            set of hyperedge orders.
     """
-    hyperedge_orders = [len(hyperedge) for hyperedges in hypergraph.values() for hyperedge in hyperedges]
+    hyperedge_orders = []
+    for edge_set in hypergraph.values():
+        for edge in edge_set:
+            hyperedge_orders.append(len(edge))
+
+
     max_order = max(hyperedge_orders)
     min_order = min(hyperedge_orders)
     avg_order = sum(hyperedge_orders) / len(hyperedge_orders)

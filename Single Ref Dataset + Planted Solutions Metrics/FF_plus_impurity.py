@@ -1,4 +1,5 @@
 import cirq
+from cirq.testing import random_circuit
 import numpy as np
 from openfermion import jordan_wigner
 import openfermion as of
@@ -96,10 +97,48 @@ def generate_random_clifford_circuit(qubits, depth):
     return circuit
 
 
-def generate_samples(n, m, sample_id, num_gates, a=100, b=1000):
-    qubits = [cirq.GridQubit(i, 0) for i in range(n)]
+def generate_random_low_depth_circuit(qubits):
+    n_moments = 4
+    op_density = 1
+    circuit = random_circuit(qubits, n_moments, op_density) #trim down gate count, S, T, CX, CZ
 
-    clifford = generate_random_clifford_circuit(qubits, num_gates)
+    return circuit
+
+
+def generate_random_unitary_circuit(nx, ny, depth, T_prob):
+    circuit = cirq.Circuit()
+
+    for _ in range(depth):
+        for i in range(nx-1):
+            for j in range(ny-1):
+                k = i + 1
+                l = j
+                circuit.append(cirq.CNOT(cirq.GridQubit(i, j), cirq.GridQubit(k, l)))
+        for i in range(nx-1):
+            for j in range(ny-1):
+                k = i
+                l = j + 1
+                circuit.append(cirq.CNOT(cirq.GridQubit(i, j), cirq.GridQubit(k, l)))
+
+        for i in range(nx):
+            for j in range(ny):
+                apply = np.random.choice(2, 1, p=[1-T_prob, T_prob])[0]
+                if apply:
+                    circuit.append(cirq.T(cirq.GridQubit(i,j)))
+
+    return circuit
+
+
+def generate_samples(n, m, a, b):
+
+    nx = n//4
+    ny = 4
+
+    depth = 20
+
+    T_prob = .99
+
+    rand_circuit = generate_random_unitary_circuit(nx, ny, depth, T_prob)
 
     U = a*np.random.uniform(low=0, high=1.0, size=(2 * n, 2 * n))
     h = np.tril(U) - np.tril(U, -1).T
@@ -123,6 +162,6 @@ def generate_samples(n, m, sample_id, num_gates, a=100, b=1000):
             gx = b * (np.random.random() + 1j * np.random.random())
             g.append(gx)
 
-    H_jw = Hspin(H(h, g), clifford)
+    H_jw = Hspin(H(h, g), rand_circuit)
 
-    compute_metrics(H_jw, sample_id=sample_id)
+    return H_jw
