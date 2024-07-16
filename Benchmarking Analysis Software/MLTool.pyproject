@@ -1,0 +1,9 @@
+{
+    "files": [
+        "main.py",
+        "UIMainWindow.py",
+        "form.ui"
+        "PandasModel.py"
+        "MLFunctionsForUI.py"
+    ]
+}
