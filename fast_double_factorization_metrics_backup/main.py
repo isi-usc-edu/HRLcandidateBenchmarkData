@@ -52,34 +52,39 @@ if __name__ == "__main__":
 
         mol, _, hcore, norb, eri_4d = load_chk(fname)
 
-        quartic_fermion = QuarticDirac(eri_4d, hcore, norb)
+        if norb <= 20:
 
-        H_DF = double_factorization_from_quartic(quartic_fermion)
-        eigs = np.array(truncate_df_eigenvalues(H_DF.eigs))
+            quartic_fermion = QuarticDirac(eri_4d, hcore, norb)
 
-        gs = H_DF.g_mats[:len(eigs)]
-        # Step 1: Flatten all the tensors into a vector of length L * N * N
-        g_flattened = gs.reshape(len(eigs), norb * norb)  # Flatten each tensor to a vector of size N*N
+            H_DF = double_factorization_from_quartic(quartic_fermion)
+            eigs = np.array(truncate_df_eigenvalues(H_DF.eigs))
 
-        # Step 2: Use the lambdas to compute the weighted sum of flattened tensors
-        g_reduced = np.dot(eigs, g_flattened)  # Weighted sum across the L tensors
+            gs = H_DF.g_mats[:len(eigs)]
+            # Step 1: Flatten all the tensors into a vector of length L * N * N
+            g_flattened = gs.reshape(len(eigs), norb * norb)  # Flatten each tensor to a vector of size N*N
 
-        # Step 3: Store the reduced vector (size N * N) for the i-th sample
-        g_reduced_vectors.append(g_reduced)
+            # Step 2: Use the lambdas to compute the weighted sum of flattened tensors
+            g_reduced = np.dot(eigs/np.linalg.norm(eigs), g_flattened)  # Weighted sum across the L tensors
 
-        norbs.append(norb)
+            # Step 3: Store the reduced vector (size N * N) for the i-th sample
+            g_reduced_vectors.append(g_reduced)
 
+            norbs.append(norb)
+
+    print(max(norbs))
     # # Step 1: Find the maximum length of the vectors
     gs_sample = []
+    max_length = max(norbs)**2
     for g in g_reduced_vectors:
-        g_vec = np.concatenate((g, np.zeros(max(norbs)**2-len(g))))
+        g_vec = np.concatenate((g, np.zeros(max_length-len(g))))
+        print(len(g_vec))
         gs_sample.append(g_vec)
 
     gs_sample = np.array(gs_sample)
     #
     # # Assuming g_reduced_vectors is already computed (size M x N*N)
     M, dim = gs_sample.shape  # M samples and original dimensionality (N*N)
-    print(M, dim)
+    print(len(gs_sample), dim)
     #
     # Step 1: Dimensionality reduction using PCA
     pca = PCA(n_components=min(M - 1, dim))  # Use M-1 components or fewer to avoid overfitting
