@@ -7,6 +7,7 @@ from closedfermion.Transformations.fermionic_encodings import fermion_to_qubit_t
 from closedfermion.Transformations.quartic_dirac_transforms import majorana_operator_from_quartic, double_factorization_from_quartic
 import pandas as pd
 from pyscf.tools import fcidump
+from faux_ham import *
 
 def truncate_df_eigenvalues(lambs, threshold=1e-8):
     """
@@ -126,3 +127,65 @@ def compute_metrics_to_csv(filename, save=True, csv_filename='metrics'):
         df.to_csv(f'{csv_filename}.csv')
 
     return metrics
+
+
+def get_minimal_metrics(nmax=30):
+    filenames = get_chk_filenames("chks/")
+
+    chks = []
+    for chk_file in filenames:
+        if 'VDZ' in chk_file:
+            print(chk_file)
+            chks.append(chk_file)
+
+
+    metrics_list = []
+    for fname in tqdm(chks):
+        mol, _, hcore, norb, eri_4d = load_chk(fname)
+
+        if norb <= nmax and norb > 20:
+            quartic_fermion = QuarticDirac(eri_4d, hcore, norb)
+
+            majorana_op = majorana_operator_from_quartic(quartic_fermion)
+            pauli_op = fermion_to_qubit_transformation(majorana_op, 'Jordan-Wigner')
+
+            pauli_data = pauli_op.data
+            vertex_degree_stats, weight_stats, edge_order_stats = compute_hypergraph_metrics(pauli_data)
+            metrics = {}
+            for key, val in list(vertex_degree_stats.items()) + list(weight_stats.items()) + list(
+                edge_order_stats.items()):
+                metrics[key] = val
+            metrics_list.append(metrics)
+
+            metrics['number_of_terms'] = len(pauli_data.keys())
+            metrics['n_orbs'] = norb
+
+
+            df = pd.DataFrame([metrics])
+            df.to_csv(f'emperical_metrics/{fname[5:-12]}.csv')
+
+
+if __name__ == "__main__":
+
+
+    # Specify the directory where your CSV files are stored
+    csv_directory = 'emperical_metrics'
+    # Create an empty list to store each DataFrame
+    dataframes = []
+
+    # Loop through all the CSV files in the directory
+    for filename in os.listdir(csv_directory):
+        if filename.endswith('.csv'):
+            file_path = os.path.join(csv_directory, filename)
+            # Read each CSV file into a DataFrame and append to the list
+            df = pd.read_csv(file_path)
+            dataframes.append(df)
+
+    # Concatenate all DataFrames into one
+    combined_df = pd.concat(dataframes, ignore_index=True)
+
+    # Save the combined DataFrame into a new CSV file
+    output_path = 'emperical_metrics_combined.csv'
+    combined_df.to_csv(output_path, index=False)
+
+    print(f"Combined CSV saved to {output_path}")

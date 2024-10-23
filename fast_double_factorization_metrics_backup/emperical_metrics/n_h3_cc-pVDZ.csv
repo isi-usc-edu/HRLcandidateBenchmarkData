@@ -1,0 +1,2 @@
+,max_vertex_degree,min_vertex_degree,mean_vertex_degree,std_dev_vertex_degree,one_norm,max_weight,min_weight,mean_weight,std_dev_weight,max_edge_order,min_edge_order,mean_edge_order,std_dev_edge_order,number_of_terms,n_orbs
+0,77807,15047,63197.0,18989.482315763365,536.6700684741,4.816990918265522,1.0209218530334269e-08,0.004029931955711862,0.06336290913402254,29,1,13.762102860232332,5.373344771257019,133172,29
