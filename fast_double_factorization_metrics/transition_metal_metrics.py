@@ -1,10 +1,9 @@
-from closedfermion.Transformations.fermionic_encodings import fermion_to_qubit_transformation
-from closedfermion.Transformations.quartic_dirac_transforms import majorana_operator_from_quartic, double_factorization_from_quartic
 import time
-from pyscf import scf, ao2mo
-import os
-from pyscf.lib import chkfile
-import numpy as np
+from closedfermion.Transformations.fermionic_encodings import fermion_to_qubit_transformation
+from closedfermion.Transformations.quartic_dirac_transforms import majorana_operator_from_quartic, \
+    double_factorization_from_quartic
+from faux_ham import *
+
 
 def get_chk_filenames(path: str, filter_str: str = None):
     fnames = [f for f in os.listdir(path) \
@@ -61,15 +60,7 @@ def truncate_df_eigenvalues(lambs, threshold=1e-8):
 
 
 if __name__ == "__main__":
-    filenames = get_chk_filenames("chks/")
-
-
-    chks=[]
-    for chk_file in filenames:
-        if '.chkfile' in chk_file:
-            chks.append(chk_file)
-
-    fname = chks[0]
+    fname = 'Ti1_vdz.chkfile'
 
     start_time = time.time()
 
