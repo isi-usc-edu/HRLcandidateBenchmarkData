@@ -1,8 +1,13 @@
+import os
 import time
+
+import numpy as np
+from pyscf import scf, ao2mo
+from pyscf.lib import chkfile
+
 from closedfermion.Transformations.fermionic_encodings import fermion_to_qubit_transformation
 from closedfermion.Transformations.quartic_dirac_transforms import majorana_operator_from_quartic, \
     double_factorization_from_quartic
-from faux_ham import *
 
 
 def get_chk_filenames(path: str, filter_str: str = None):
