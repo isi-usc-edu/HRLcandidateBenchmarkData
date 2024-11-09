@@ -15,6 +15,18 @@ from compute_metrics import compute_hypergraph_metrics
 import math
 from scipy.special import comb
 
+class NpEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
+        if isinstance(obj, np.floating):
+            return float(obj)
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return super(NpEncoder, self).default(obj)
+
+
+
 def log_fci_hilbert_space_size_approx(n_orbitals, n_electrons):
     # Approximate half of electrons as alpha and half as beta
     n_alpha = n_electrons // 2
@@ -121,5 +133,5 @@ def compute_metal_metrics(idx):
     end_time = time.time()
     metrics_target['wallclock_time'] = end_time-start_time
     filename = extract_last_elements(fname)
-    with open(f"{filename}.json", "w") as json_file:
-        json.dump(metrics_target, json_file, indent=4)
+    with open(f"./trans_metal_metrics/{filename}.json", "w") as json_file:
+        json.dump(metrics_target, json_file, cls=NpEncoder)
